@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include "dog.h"
 /**
- * free_dog - frees memory allocated for struct dog
- * @d: struct dog to free
+ * free_dog - frees memory allocated for a dog_t struct
+ * @d: pointer to the dog_t struct to free
  */
 void free_dog(dog_t *d)
 {

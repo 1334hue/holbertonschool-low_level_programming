@@ -3,6 +3,7 @@
 /**
  * _strlen - returns the length of a string
  * @s: string to evaluate
+ *
  * Return: the length of the string
  */
 int _strlen(char *s)
@@ -14,9 +15,10 @@ int _strlen(char *s)
 	return (i);
 }
 /**
- * _strcpy - copies string
- * @dest: destination
- * @src: source
+ * _strcpy - copies a string from src to dest
+ * @dest: destination buffer
+ * @src: source string
+ *
  * Return: pointer to dest
  */
 char *_strcpy(char *dest, char *src)
@@ -29,10 +31,11 @@ char *_strcpy(char *dest, char *src)
 	return (dest);
 }
 /**
- * new_dog - creates a new dog
- * @name: name
- * @age: age
- * @owner: owner
+ * new_dog - creates a new dog struct and copies data
+ * @name: name of the dog
+ * @age: age of the dog
+ * @owner: owner of the dog
+ *
  * Return: pointer to the new dog (Success), NULL otherwise
  */
 dog_t *new_dog(char *name, float age, char *owner)
