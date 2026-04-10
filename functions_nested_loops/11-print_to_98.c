@@ -1,5 +1,9 @@
 #include <stdio.h>
 #include "main.h"
+/**
+ * print_to_98 - print to 98
+ * @n: start
+ */
 void print_to_98(int n)
 {
 	while (n != 98)
