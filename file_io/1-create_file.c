@@ -1,42 +1,25 @@
- #include "main.h"
+#include "main_h"
  /**
-  *  _strlen - returns the length of a string 
-  * @s: the string whose length to check
+  * read_textfile - reads text from a file and prints it
+  * @filename: name of file to read
+  * @letters: number of bytes to read
   * 
-  * 
-  * Return : integer length of string 
-  */
- 
- 
- int _strlen(char *s)
- {
-    int i =0;
-    if (!s)
-    return (0);
-    while (*s++)
-    i++;
-    return (i);
- }
-
- /**
-  * creat_file - creats a file
-  * @filename: name of file to creat
-  * @text_content: text to write
-  * 
-  * Return: 1 on success 0 on failure
+  * Return: number of bytes read/printed
   */
 
-  int create_file(const char *filename, char *text_content);
+  ssize_t read_textfile(const char *filename , size_t letters)
   {
-int fd;
-ssize_t bytes =0 , len = _strlen(text_content);
-if (!filename)
-return (-1);
-fi = open(filename, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR );
-if (fd == -1)
-return (-1);
-if (len)
-bytes = write(fd, text_content, len);
-close (fd);
-return(bytes == len ? 1 : -1);
+            int fd;
+            ssize_t bytes;
+            char buf[READ_BUF_SIZE * 8];
+
+            if(!filename || !letters)
+               return(0);
+            fd = open(filename , O_RDONLY);
+            if (fd == -1)
+                 return(0);
+           bytes = read(fd, &buf[0], letters);
+           bytes = write(STDOUT_FILENO, &buf[0], bytes);
+           close(fd);
+           return(bytes);
   }
