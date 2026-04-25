@@ -1,25 +1,31 @@
-#include "main_h"
- /**
-  * read_textfile - reads text from a file and prints it
-  * @filename: name of file to read
-  * @letters: number of bytes to read
-  * 
-  * Return: number of bytes read/printed
-  */
+#include "main.h"
 
-  ssize_t read_textfile(const char *filename , size_t letters)
-  {
-            int fd;
-            ssize_t bytes;
-            char buf[READ_BUF_SIZE * 8];
+/**
+ * create_file - creates a file
+ * @filename: name of the file to create
+ * @text_content: NULL terminated string to write
+ * Return: 1 on success, -1 on failure
+ */
+int create_file(const char *filename, char *text_content)
+{
+	int fd, len = 0, wr;
 
-            if(!filename || !letters)
-               return(0);
-            fd = open(filename , O_RDONLY);
-            if (fd == -1)
-                 return(0);
-           bytes = read(fd, &buf[0], letters);
-           bytes = write(STDOUT_FILENO, &buf[0], bytes);
-           close(fd);
-           return(bytes);
-  }
+	if (!filename)
+		return (-1);
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
+	if (fd == -1)
+		return (-1);
+	if (text_content)
+	{
+		while (text_content[len])
+			len++;
+		wr = write(fd, text_content, len);
+		if (wr == -1)
+		{
+			close(fd);
+			return (-1);
+		}
+	}
+	close(fd);
+	return (1);
+}
