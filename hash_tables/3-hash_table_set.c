@@ -10,46 +10,39 @@
  */
 int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 {
-	unsigned long int index;
-	hash_node_t *new_node, *temp;
-	char *value_copy;
+	unsigned long int idx;
+	hash_node_t *new, *temp;
+	char *v_copy;
 
 	if (ht == NULL || key == NULL || *key == '\0' || value == NULL)
 		return (0);
-
-	index = key_index((const unsigned char *)key, ht->size);
-
-	/* Check for existing key to update value */
-	temp = ht->array[index];
+	idx = key_index((const unsigned char *)key, ht->size);
+	temp = ht->array[idx];
 	while (temp)
 	{
 		if (strcmp(temp->key, key) == 0)
 		{
-			value_copy = strdup(value);
-			if (value_copy == NULL)
+			v_copy = strdup(value);
+			if (v_copy == NULL)
 				return (0);
 			free(temp->value);
-			temp->value = value_copy;
+			temp->value = v_copy;
 			return (1);
 		}
 		temp = temp->next;
 	}
-
-	/* Collision or new key: Prepend new node */
-	new_node = malloc(sizeof(hash_node_t));
-	if (new_node == NULL)
+	new = malloc(sizeof(hash_node_t));
+	if (new == NULL)
 		return (0);
-
-	new_node->key = strdup(key);
-	new_node->value = strdup(value);
-	if (new_node->key == NULL || new_node->value == NULL)
+	new->key = strdup(key);
+	new->value = strdup(value);
+	if (new->key == NULL || new->value == NULL)
 	{
-		free(new_node->key);
-		free(new_node);
+		free(new->key);
+		free(new);
 		return (0);
 	}
-	new_node->next = ht->array[index];
-	ht->array[index] = new_node;
-
+	new->next = ht->array[idx];
+	ht->array[idx] = new;
 	return (1);
 }
